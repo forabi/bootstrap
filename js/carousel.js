@@ -51,7 +51,7 @@
 
     this.options.interval
       && !this.paused
-      && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))
+      && (this.interval = setInterval($.proxy(this.prev, this), this.options.interval))
 
     return this
   }
@@ -72,7 +72,7 @@
     if (this.sliding)       return this.$element.one('slid', function () { that.to(pos) })
     if (activeIndex == pos) return this.pause().cycle()
 
-    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
+    return this.slide(pos > activeIndex ? 'prev' : 'next', $(this.$items[pos]))
   }
 
   Carousel.prototype.pause = function (e) {
@@ -90,12 +90,12 @@
 
   Carousel.prototype.next = function () {
     if (this.sliding) return
-    return this.slide('next')
+    return this.slide('prev')
   }
 
   Carousel.prototype.prev = function () {
     if (this.sliding) return
-    return this.slide('prev')
+    return this.slide('next')
   }
 
   Carousel.prototype.slide = function (type, next) {

@@ -326,7 +326,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     this.options.interval
       && !this.paused
-      && (this.interval = setInterval($.proxy(this.next, this), this.options.interval))
+      && (this.interval = setInterval($.proxy(this.prev, this), this.options.interval))
 
     return this
   }
@@ -347,7 +347,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     if (this.sliding)       return this.$element.one('slid', function () { that.to(pos) })
     if (activeIndex == pos) return this.pause().cycle()
 
-    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
+    return this.slide(pos > activeIndex ? 'prev' : 'next', $(this.$items[pos]))
   }
 
   Carousel.prototype.pause = function (e) {
@@ -365,12 +365,12 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
   Carousel.prototype.next = function () {
     if (this.sliding) return
-    return this.slide('next')
+    return this.slide('prev')
   }
 
   Carousel.prototype.prev = function () {
     if (this.sliding) return
-    return this.slide('prev')
+    return this.slide('next')
   }
 
   Carousel.prototype.slide = function (type, next) {
@@ -1223,7 +1223,13 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
       var placement = typeof this.options.placement == 'function' ?
         this.options.placement.call(this, $tip[0], this.$element[0]) :
-        this.options.placement
+        this.options.placement;
+      var oldPlacement = placement;
+      if (placement.indexOf('left') !== -1){
+        placement = placement.replace('left', 'right');
+      } else {
+        placement = placement.replace('right', 'left');
+      }
 
       var autoToken = /\s?auto?\s?/i
       var autoPlace = autoToken.test(placement)
@@ -1232,7 +1238,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       $tip
         .detach()
         .css({ top: 0, left: 0, display: 'block' })
-        .addClass(placement)
+        .addClass(this.options.type == "popover" ? oldPlacement : placement)
 
       this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
 
@@ -1314,7 +1320,6 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     } else {
       this.replaceArrow(actualHeight - height, actualHeight, 'top')
     }
-
     if (replace) $tip.offset(offset)
   }
 
@@ -1496,6 +1501,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   , trigger: 'click'
   , content: ''
   , template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+  , type: 'popover'
   })
 
 

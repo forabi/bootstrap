@@ -148,7 +148,13 @@
 
       var placement = typeof this.options.placement == 'function' ?
         this.options.placement.call(this, $tip[0], this.$element[0]) :
-        this.options.placement
+        this.options.placement;
+      var oldPlacement = placement;
+      if (placement.indexOf('left') !== -1){
+        placement = placement.replace('left', 'right');
+      } else {
+        placement = placement.replace('right', 'left');
+      }
 
       var autoToken = /\s?auto?\s?/i
       var autoPlace = autoToken.test(placement)
@@ -157,7 +163,7 @@
       $tip
         .detach()
         .css({ top: 0, left: 0, display: 'block' })
-        .addClass(placement)
+        .addClass(this.options.type == "popover" ? oldPlacement : placement)
 
       this.options.container ? $tip.appendTo(this.options.container) : $tip.insertAfter(this.$element)
 
@@ -239,7 +245,6 @@
     } else {
       this.replaceArrow(actualHeight - height, actualHeight, 'top')
     }
-
     if (replace) $tip.offset(offset)
   }
 
