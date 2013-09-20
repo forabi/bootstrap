@@ -5694,7 +5694,7 @@ a.list-group-item:focus {
 }
 
 .close {
-  float: right;
+  float: left;
   font-size: 21px;
   font-weight: bold;
   line-height: 1;
@@ -5728,7 +5728,7 @@ button.close {
 body.modal-open,
 .modal-open .navbar-fixed-top,
 .modal-open .navbar-fixed-bottom {
-  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .modal {
@@ -5822,7 +5822,7 @@ body.modal-open,
 .modal-footer {
   padding: 19px 20px 20px;
   margin-top: 15px;
-  text-align: right;
+  text-align: left;
   border-top: 1px solid #e5e5e5;
 }
 
@@ -5847,16 +5847,16 @@ body.modal-open,
 }
 
 .modal-footer .btn + .btn {
+  margin-right: 5px;
   margin-bottom: 0;
-  margin-left: 5px;
 }
 
 .modal-footer .btn-group .btn + .btn {
-  margin-left: -1px;
+  margin-right: -1px;
 }
 
 .modal-footer .btn-block + .btn-block {
-  margin-left: 0;
+  margin-right: 0;
 }
 
 @media screen and (min-width: 768px) {
